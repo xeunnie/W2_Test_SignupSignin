@@ -1,3 +1,5 @@
+import React from "react";
+
 interface ButtonProps {
     type: 'button' | 'submit' | 'reset'
     style: string
