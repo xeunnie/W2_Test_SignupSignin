@@ -5,7 +5,7 @@ import {
     isPassword,
     isNickname,
     isName,
-} from "@/utils/stringValidations";
+} from "@/utils/stringValidations"
 
 describe("문자열 유효성 검사 함수 테스트", () => {
     test("isEmptyString - 빈 문자열 테스트", () => {

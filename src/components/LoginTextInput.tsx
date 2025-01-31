@@ -16,7 +16,7 @@ export default function LoginTextInput({
                                            ...props
                                        }: LoginTextInputProps) {
     return (
-        <LoginLabel title={title} error={error} isRequired={isRequired}>
+        <LoginLabel title={title} error={error} isRequired={isRequired} htmlFor={name}>
             <input
                 id={name}
             className='h-10 p-3 rounded-[3px] bg-[#1E1F22]'

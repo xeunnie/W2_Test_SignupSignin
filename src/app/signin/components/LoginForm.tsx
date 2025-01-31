@@ -71,7 +71,7 @@ function LoginForm() {
             <LoginTextInput
                 name="email"
                 type="email"
-                title="이메일"
+                title="email"
                 value={values.email as string}
                 onChange={(e) => changeFieldValue(e.target.value, "email")}
                 error={errors.email}
@@ -80,7 +80,7 @@ function LoginForm() {
             <LoginTextInput
                 name="password"
                 type="password"
-                title="비밀번호"
+                title="password"
                 value={values.password as string}
                 onChange={(e) => changeFieldValue(e.target.value, "password")}
                 error={errors.password}
