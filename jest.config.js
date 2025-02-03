@@ -20,4 +20,5 @@ module.exports = createJestConfig({
   transform: {
     '^.+\\.(ts|tsx|js|jsx)$': 'babel-jest',
   },
+  transformIgnorePatterns: ['<rootDir>/node_modules/(?!(next)/)'],
 });
