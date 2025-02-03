@@ -1,8 +1,25 @@
-module.exports = {
-    testEnvironment: "jsdom",
-    setupFilesAfterEnv: ["<rootDir>/src/setupTests.ts"],
-    collectCoverage: true, // 커버리지 리포트 활성화
+import type { Config } from 'jest'
+import nextJest from 'next/jest.js'
+
+const createJestConfig = nextJest({
+    dir: './',
+})
+
+const config: Config = {
+    coverageProvider: 'v8',
+    testEnvironment: 'jsdom',
+    moduleDirectories: ['node_modules', '<rootDir>/'],
+
+    moduleNameMapper: {
+        '^@/(.*)$': '<rootDir>/src/$1',
+    },
+
+    setupFilesAfterEnv: ['./jest.setup.ts'],
+
+    // 추가된 커버리지 설정 (xeunnie-patch-9 브랜치 코드 통합)
+    collectCoverage: true,
     coverageDirectory: "coverage",
-    coverageReporters: ["lcov", "text-summary"], // Codecov가 인식할 수 있도록 lcov 포맷 추가
-    testEnvironment: "jsdom",
-};
+    coverageReporters: ["lcov", "text-summary"], // Codecov 포맷 추가
+}
+
+export default createJestConfig(config)
