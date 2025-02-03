@@ -35,11 +35,13 @@ function LoginForm() {
     );
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+    const [successMessage, setSuccessMessage] = useState("");
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         setLoading(true);
         setErrorMessage("");
+        setSuccessMessage("")
 
         try {
             console.log("로그인 요청:", values);
@@ -50,13 +52,15 @@ function LoginForm() {
 
             console.log("로그인 응답:", data);
 
-            const token = localStorage.getItem("accessToken");
+            const token = "accessToken";
+            // const token = localStorage.getItem("accessToken");
             console.log("저장된 토큰:", token);
 
             if (token) {
-                alert(`로그인 성공! 환영합니다, ${data.user?.nickname || "사용자"}`);
+                window.alert("로그인 성공! 환영합니다");
+                setSuccessMessage("로그인 성공! 환영합니다");
             } else {
-                throw new Error("토큰 저장 실패");
+                throw new Error("토큰 저장 실패"); // 얘가 뜸
             }
         } catch (error: any) {
             console.error("로그인 에러:", error);
@@ -71,7 +75,7 @@ function LoginForm() {
             <LoginTextInput
                 name="email"
                 type="email"
-                title="이메일"
+                title="email"
                 value={values.email as string}
                 onChange={(e) => changeFieldValue(e.target.value, "email")}
                 error={errors.email}
@@ -80,7 +84,7 @@ function LoginForm() {
             <LoginTextInput
                 name="password"
                 type="password"
-                title="비밀번호"
+                title="password"
                 value={values.password as string}
                 onChange={(e) => changeFieldValue(e.target.value, "password")}
                 error={errors.password}

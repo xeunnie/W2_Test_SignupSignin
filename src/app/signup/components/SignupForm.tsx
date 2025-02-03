@@ -87,22 +87,31 @@ export default function SignupForm() {
         event.preventDefault();
         setLoading(true);
         setErrorMessage("");
+        console.log("버튼 비활성화 (loading = true)");
 
         try {
+            const birthdateValue = `${birthdate.year || "0000"}-${birthdate.month || "00"}-${birthdate.day || "00"}`;
+
             const userData = {
                 email: values.email as string,
                 password: values.password as string,
                 nickname: values.nickname as string,
                 name: values.name as string,
-                birthdate: `${birthdate.year}-${birthdate.month}-${birthdate.day}`
+                birthdate: birthdateValue,
             };
-
+            console.log("회원가입 요청 데이터:", userData);
             await signUp(userData);
-            alert("회원가입 성공! 로그인 해주세요.");
+            // alert("회원가입 성공! 로그인 해주세요.");
+            console.log("회원가입 성공!");
+            setTimeout(() => {
+                alert("회원가입 성공! 로그인 해주세요.");
+            }, 0);
         } catch (error: any) {
+            console.error("회원가입 실패:", error);
             setErrorMessage(error.response?.data?.message || "회원가입에 실패했습니다.");
         } finally {
             setLoading(false);
+            console.log("버튼 활성화 (loading = false)");
         }
     };
 
@@ -111,16 +120,16 @@ export default function SignupForm() {
             <LoginTextInput
                 name="email"
                 type="email"
-                title="이메일"
+                title="email"
                 value={values.email as string}
                 onChange={(e) => changeFieldValue(e.target.value, "email")}
                 error={errors.email}
                 isRequired={isRequired.email}
             />
             <LoginTextInput
-                name="name"
+                name="username"
                 type="text"
-                title="이름"
+                title="username"
                 value={values.name as string}
                 onChange={(e) => changeFieldValue(e.target.value, "name")}
                 error={errors.name}
@@ -129,7 +138,7 @@ export default function SignupForm() {
             <LoginTextInput
                 name="nickname"
                 type="text"
-                title="닉네임"
+                title="nickname"
                 value={values.nickname as string}
                 onChange={(e) => changeFieldValue(e.target.value, "nickname")}
                 error={errors.nickname}
@@ -138,15 +147,15 @@ export default function SignupForm() {
             <LoginTextInput
                 name="password"
                 type="password"
-                title="비밀번호"
+                title="password"
                 value={values.password as string}
                 onChange={(e) => changeFieldValue(e.target.value, "password")}
                 error={errors.password}
                 isRequired={isRequired.password}
             />
-            <LoginLabel title="생년월일">
-                <DatePicker   onChange={setBirthdate}/>
-            </LoginLabel>
+            {/*<LoginLabel title="생년월일">*/}
+            {/*    <DatePicker   onChange={setBirthdate}/>*/}
+            {/*</LoginLabel>*/}
             <label className="mt-3 flex items-center">
                 <Checkbox
                     style={`flex w-6 h-6 p-[3px] rounded-[6px] border-[1px] bg-transparent border-gray-400 hover:outline-none`}

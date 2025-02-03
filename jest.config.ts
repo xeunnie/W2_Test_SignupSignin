@@ -1,4 +1,20 @@
-module.exports = {
-    testEnvironment: "jsdom",
-    setupFilesAfterEnv: ["<rootDir>/src/setupTests.ts"],
-};
+import type { Config } from 'jest'
+import nextJest from 'next/jest.js'
+
+const createJestConfig = nextJest({
+    dir: './',
+})
+
+const config: Config = {
+    coverageProvider: 'v8',
+    testEnvironment: 'jsdom',
+    moduleDirectories: ['node_modules', '<rootDir>/'],
+
+    moduleNameMapper: {
+        '^@/(.*)$': '<rootDir>/src/$1',
+    },
+
+    setupFilesAfterEnv: ['./jest.setup.ts'],
+}
+
+export default createJestConfig(config)
