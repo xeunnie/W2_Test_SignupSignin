@@ -6,12 +6,12 @@ const createJestConfig = nextJest({
 
 module.exports = createJestConfig({
   coverageProvider: 'v8',
-  testEnvironment: 'jsdom',
+  testEnvironment: 'node', // ✅ 기존 'jsdom' → 'node'로 변경
   moduleDirectories: ['node_modules', '<rootDir>/'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
-  setupFilesAfterEnv: ['./jest.setup.js'], // TypeScript 설정이면 .ts 그대로 유지
+  setupFilesAfterEnv: ['./jest.setup.js'],
   collectCoverage: true,
   coverageDirectory: 'coverage',
   coverageReporters: ['lcov', 'text-summary'],
