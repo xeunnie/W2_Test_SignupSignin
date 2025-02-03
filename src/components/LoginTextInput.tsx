@@ -23,6 +23,7 @@ export default function LoginTextInput({
             required={isRequired}
             {...props}
             />
+            {error && <p data-testid={`${name}-error`} className="text-red-500 mt-2">{error}</p>}
     </LoginLabel>
 )
 }

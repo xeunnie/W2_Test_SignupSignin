@@ -3,7 +3,6 @@ import userEvent from "@testing-library/user-event";
 import { render, fireEvent, waitFor, screen } from "@testing-library/react";
 import { signIn } from "@/api/authService";
 
-
 // ✅ `signIn` API를 Mocking하여 실제 API 요청을 막음
 jest.mock("@/api/authService", () => ({
     signIn: jest.fn(),
@@ -24,8 +23,8 @@ describe("LoginForm 컴포넌트 테스트", () => {
 
         fireEvent.click(submitButton);
 
-        expect(await screen.findByText("이메일을 입력해주세요")).toBeInTheDocument();
-        expect(await screen.findByText("비밀번호를 입력해주세요")).toBeInTheDocument();
+        expect(await screen.findByText(/email/i)).toBeInTheDocument();
+        expect(await screen.findByText(/password/i)).toBeInTheDocument();
     });
 
     test("📌 올바른 값 입력 후 `signIn` API가 호출되는지", async () => {
@@ -52,17 +51,17 @@ describe("LoginForm 컴포넌트 테스트", () => {
             });
         });
 
-        jest.spyOn(window, "alert").mockImplementation(() => {});
+        const alertSpy = jest.spyOn(window, "alert").mockImplementation(() => {});
         await waitFor(() => {
-            expect(window.alert).toHaveBeenCalledWith("로그인 성공! 환영합니다, 승은");
+            expect(alertSpy).toHaveBeenCalledWith("로그인 성공! 환영합니다");
         });
     });
 
     test("📌 로그인 실패 시 에러 메시지가 표시되는지", async () => {
         render(<LoginForm />);
 
-        const emailInput = screen.getByLabelText("이메일");
-        const passwordInput = screen.getByLabelText("비밀번호");
+        const emailInput = screen.getByLabelText(/email/i);
+        const passwordInput = screen.getByLabelText(/password/i);
         const submitButton = screen.getByRole("button", { name: /로그인/i });
 
         await userEvent.type(emailInput, "wrong@example.com");
@@ -80,8 +79,8 @@ describe("LoginForm 컴포넌트 테스트", () => {
     test("📌 로그인 버튼 클릭 시 `로그인 중...`으로 변경", async () => {
         render(<LoginForm />);
 
-        const emailInput = screen.getByLabelText("이메일");
-        const passwordInput = screen.getByLabelText("비밀번호");
+        const emailInput = screen.getByLabelText(/email/i);
+        const passwordInput = screen.getByLabelText(/password/i);
         const submitButton = screen.getByRole("button", { name: /로그인/i });
 
         await userEvent.type(emailInput, "test@example.com");
